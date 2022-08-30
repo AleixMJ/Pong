@@ -9,6 +9,11 @@ function love.load()
     AI:load()
     Background:load()
 
+    sounds = {}
+    sounds.music = love.audio.newSource("sfx/music.mp3", "stream")
+    sounds.music:setLooping(true)
+
+    sounds.music:play()
     Score = {player = 0, ai = 0}
     font = love.graphics.newFont(30)
 

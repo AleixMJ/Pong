@@ -9,6 +9,11 @@ function Ball:load()
     self.speed = 500
     self.xVel = -self.speed
     self.yVel = 0
+
+    sounds2 = {}
+    sounds2.ball = love.audio.newSource("sfx/ballhit.wav", "static")
+    sounds2.score = love.audio.newSource("sfx/score.wav", "static")
+    sounds2.fail = love.audio.newSource("sfx/fail.mp3", "static")
 end
 
 
@@ -44,6 +49,7 @@ function Ball:collidePlayer()
         local middlePlayer = Player.y + Player.height /2
         local collisionPosition = middleBall - middlePlayer
         self.yVel = collisionPosition * 5
+        sounds2.ball:play()
      end
 
 end
@@ -55,6 +61,7 @@ function Ball:collideAI()
         local middleAI = AI.y + AI.height /2
         local collisionPosition = middleBall - middleAI
         self.yVel = collisionPosition * 5
+        sounds2.ball:play()
      end
 
 end
@@ -64,11 +71,13 @@ function Ball:score()
     if self.x < 0 then
         self:resetPosition(1)
         Score.ai = Score.ai + 1
+        sounds2.fail:play()
     end
 
     if self.x + self.width > love.graphics.getWidth() then
         self:resetPosition(-1)
         Score.player = Score.player + 1
+        sounds2.score:play()
     end
 
 end
